@@ -1,0 +1,120 @@
+# Cursor Rules for Marketing Automation Application
+
+## Project Structure Rules
+
+### Frontend Structure
+- All components must be in `src/components`
+- Pages must be in `src/pages`
+- Reusable hooks in `src/hooks`
+- API services in `src/services`
+- Utils in `src/utils`
+- Assets in `src/assets`
+
+### Backend Structure
+- Controllers in `src/controllers`
+- Models in `src/models`
+- Routes in `src/routes`
+- Middleware in `src/middleware`
+- Utils in `src/utils`
+- Config in `src/config`
+
+## Naming Conventions
+
+### Frontend
+- Components: PascalCase (e.g., UserProfile.jsx)
+- Hooks: camelCase with 'use' prefix (e.g., useAuth.js)
+- Utils: camelCase (e.g., formatDate.js)
+- Constants: UPPER_SNAKE_CASE
+- CSS classes: kebab-case
+
+### Backend
+- Files: camelCase (e.g., userController.js)
+- Classes: PascalCase
+- Functions: camelCase
+- Constants: UPPER_SNAKE_CASE
+- Routes: kebab-case
+- Environment variables: UPPER_SNAKE_CASE
+
+## Code Style Rules
+
+### JavaScript/React
+- Use functional components
+- Use ES6+ features
+- Destructure props
+- Use prop-types for component props
+- Keep components focused and small
+- Use meaningful variable names
+- Add JSDoc comments for functions
+
+### API Design
+- Use RESTful conventions
+- Version all endpoints (/api/v1/...)
+- Use proper HTTP methods
+- Return consistent response format
+- Include proper error handling
+- Document with Swagger
+
+## Testing Rules
+- Write tests before implementation
+- Maintain test coverage > 80%
+- Test edge cases
+- Mock external dependencies
+- Use meaningful test descriptions
+- Group related tests
+
+## Git Workflow
+- Feature branches from main
+- Branch naming: feature/*, bugfix/*, hotfix/*
+- Meaningful commit messages
+- Pull request required for main
+- Code review required
+
+## Documentation Rules
+- Update API docs with changes
+- Document complex functions
+- Keep README up to date
+- Document environment setup
+- Include usage examples
+
+## Security Rules
+- No sensitive data in code
+- Use environment variables
+- Validate all inputs
+- Sanitize all outputs
+- Implement rate limiting
+- Use secure headers
+
+## Performance Rules
+- Optimize component renders
+- Lazy load routes
+- Implement proper caching
+- Optimize API responses
+- Monitor bundle size
+
+## Error Handling
+- Use try-catch blocks
+- Log errors properly
+- Return meaningful messages
+- Handle edge cases
+- Validate user input
+
+## State Management
+- Use React Context for global state
+- Keep state close to usage
+- Avoid prop drilling
+- Use proper state initialization
+- Handle loading states
+
+## Accessibility
+- Use semantic HTML
+- Include ARIA labels
+- Ensure keyboard navigation
+- Maintain color contrast
+- Support screen readers
+
+## Responsive Design
+- Mobile-first approach
+- Use Bootstrap breakpoints
+- Test on multiple devices
+- Ensure touch targets
+- Handle orientation changes 
