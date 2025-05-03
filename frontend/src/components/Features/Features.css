@@ -146,6 +146,20 @@
   border-radius: 8px;
 }
 
+.feature-card .btn-primary {
+  background-color: var(--white);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 6px rgba(47, 83, 154, 0.1);
+}
+
+.feature-card .btn-primary:hover {
+  background-color: var(--light-bg);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(47, 83, 154, 0.15);
+}
+
 /* Tablet Styles */
 @media (max-width: 968px) {
   .feature-detailed {
