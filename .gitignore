@@ -39,7 +39,7 @@ coverage/
 .idea/
 .vscode/
 *.swp
-*.swo
+*.swo 
 *.swn
 .DS_Store
 .env.local
