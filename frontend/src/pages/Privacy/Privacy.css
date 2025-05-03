@@ -1,0 +1,94 @@
+.privacy-page {
+  width: 100%;
+}
+
+/* Hero Section */
+.privacy-hero {
+  background-color: var(--primary);
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-top: 73px; /* Account for fixed navbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.privacy-hero h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.back-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.back-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Content Section */
+.privacy-content {
+  padding: 4rem 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.policy-text {
+  color: #333;
+}
+
+.policy-text h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin: 2.5rem 0 1.5rem;
+  font-weight: 600;
+}
+
+.policy-text h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 2rem 0 1rem;
+  font-weight: 500;
+}
+
+.policy-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #4a5568;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .privacy-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .privacy-content {
+    padding: 3rem 0;
+  }
+
+  .policy-text h2 {
+    font-size: 1.75rem;
+  }
+
+  .policy-text h3 {
+    font-size: 1.25rem;
+  }
+
+  .policy-text p {
+    font-size: 1rem;
+  }
+} 

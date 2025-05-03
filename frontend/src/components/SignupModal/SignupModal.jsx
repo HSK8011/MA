@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { authService } from '../../services/authService';
 import './SignupModal.css';
 
@@ -32,13 +33,8 @@ const SignupModal = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      // Split full name into first and last name for the API
-      const [firstName, ...lastNameParts] = formData.fullName.trim().split(' ');
-      const lastName = lastNameParts.join(' ') || firstName; // If no last name, use first name
-
       const userData = {
-        firstName,
-        lastName,
+        fullName: formData.fullName.trim(),
         email: formData.email,
         password: formData.password,
         role: formData.role
@@ -141,9 +137,9 @@ const SignupModal = ({ onClose }) => {
 
           <p className="signup-terms">
             By clicking "Create Account", I agree to MAT's{' '}
-            <a href="/terms" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>
+            <Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={onClose}>Terms & Conditions</Link>
             {' '}and acknowledge its{' '}
-            <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+            <Link to="/privacy" target="_blank" rel="noopener noreferrer" onClick={onClose}>Privacy Policy</Link>.
           </p>
         </form>
       </div>

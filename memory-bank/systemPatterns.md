@@ -298,4 +298,120 @@ src/
    - Swagger documentation
    - API versioning
    - Error response format
-   - Rate limit information 
+   - Rate limit information
+
+## Authentication Flow
+
+### User Authentication
+- JWT-based authentication system
+- Token stored in localStorage
+- Automatic token inclusion in protected API requests
+- Session management through token expiration
+
+### Password Reset Flow
+1. Request OTP
+   - User enters email
+   - Backend generates OTP (000000 for development)
+   - OTP sent to user's email (disabled in development)
+
+2. OTP Verification
+   - User enters 6-digit OTP
+   - Backend validates OTP and expiration
+   - Returns reset token on success
+
+3. Password Reset
+   - User enters new password
+   - Reset token validated
+   - Password updated in database
+
+## Error Handling Pattern
+
+### API Error Handling
+```javascript
+const handleApiError = (error, operation) => {
+  console.error(`${operation} failed:`, error);
+  
+  if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+    throw new Error('Unable to connect to the server. Please check your internet connection.');
+  }
+
+  if (error.response) {
+    throw new Error(error.response.message || `${operation} failed`);
+  }
+
+  throw error;
+};
+```
+
+### Error Categories
+1. Network Errors
+   - Connection failures
+   - Timeout issues
+   - Server unreachable
+
+2. API Errors
+   - Invalid credentials
+   - Resource not found
+   - Validation errors
+   - Server errors
+
+3. Client-side Errors
+   - Local storage issues
+   - Form validation
+   - State management errors
+
+### Error Response Format
+```javascript
+{
+  status: 'error',
+  message: 'User-friendly error message',
+  data?: {
+    // Optional additional error details
+  }
+}
+```
+
+## Form Validation Patterns
+
+### Client-side Validation
+- Required field checks
+- Password strength requirements
+- Email format validation
+- Cross-field validation (password confirmation)
+
+### Server-side Validation
+- Data type validation
+- Business rule validation
+- Security checks
+- Duplicate checks
+
+## Component Patterns
+
+### Modal Components
+- Consistent close button placement
+- Backdrop click handling
+- Loading state management
+- Error message display
+- Success feedback
+
+### Form Components
+- Consistent layout
+- Proper label association
+- Accessibility compliance
+- Loading state indicators
+- Error message placement
+
+## Security Patterns
+
+### Password Security
+- Minimum 8 characters
+- Password hashing (bcrypt)
+- No password exposure in responses
+- Secure reset flow
+
+### API Security
+- CORS configuration
+- Rate limiting
+- Input sanitization
+- Token-based authentication
+- XSS prevention 
