@@ -16,6 +16,14 @@ exports.register = async (req, res) => {
   try {
     const { fullName, email, password, role } = req.body;
 
+    // Validate required fields
+    if (!fullName || !email || !password) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Please provide name, email and password'
+      });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -27,15 +35,10 @@ exports.register = async (req, res) => {
 
     // Create new user
     const user = await User.create({
-      fullName,
+      name: fullName,
       email,
       password,
-      role,
-      // Commented out for development
-      /*
-      verificationToken,
-      verificationTokenExpires
-      */
+      role: role || 'Guest' // Default to Guest if not provided
     });
 
     // Generate JWT token
@@ -47,10 +50,18 @@ exports.register = async (req, res) => {
       data: {
         user: user.getPublicProfile()
       },
-      // Modified message for development
       message: 'Registration successful.'
     });
   } catch (error) {
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        status: 'error',
+        message: messages.join('. ')
+      });
+    }
+
     res.status(400).json({
       status: 'error',
       message: error.message
@@ -71,8 +82,8 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Find user and include password field
-    const user = await User.findOne({ email }).select('+password');
+    // Find user and include passwordHash field
+    const user = await User.findOne({ email }).select('+passwordHash');
     
     // Check if user exists and password is correct
     if (!user || !(await user.comparePassword(password))) {
@@ -193,7 +204,7 @@ exports.resetPassword = async (req, res) => {
       });
     }
 
-    // Update password
+    // Update password using virtual field
     user.password = newPassword;
     user.resetPasswordOTP = undefined;
     user.resetPasswordOTPExpires = undefined;

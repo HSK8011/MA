@@ -1,10 +1,26 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const notificationTypesSchema = new mongoose.Schema({
+  profileUpdates: { type: Boolean, default: true },
+  newUserAdded: { type: Boolean, default: true },
+  newSocialProfile: { type: Boolean, default: true },
+  newPost: { type: Boolean, default: true },
+  approvalRequests: { type: Boolean, default: true },
+  requestApproved: { type: Boolean, default: true },
+  requestRejected: { type: Boolean, default: true }
+}, { _id: false });
+
+const notificationPreferencesSchema = new mongoose.Schema({
+  email: { type: Boolean, default: true },
+  appNotifications: { type: Boolean, default: true },
+  notificationTypes: { type: notificationTypesSchema, default: () => ({}) }
+}, { _id: false });
+
 const userSchema = new mongoose.Schema({
-  fullName: {
+  name: {
     type: String,
-    required: [true, 'Full name is required'],
+    required: [true, 'Name is required'],
     trim: true
   },
   email: {
@@ -13,7 +29,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email'],
+    index: true // As specified in schema.md
   },
   phoneNumber: {
     type: String,
@@ -47,45 +64,93 @@ const userSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid timezone! Please use IANA timezone format (e.g., 'America/New_York', 'Asia/Tokyo').`
     }
   },
-  password: {
+  passwordHash: {
     type: String,
-    required: [true, 'Password is required'],
-    minlength: [8, 'Password must be at least 8 characters'],
-    select: false // Don't return password in queries by default
+    select: false
   },
   role: {
     type: String,
     enum: ['Solo Practitioner', 'Social Media Agency', 'Administrator', 'Content Scheduler', 'Social Media Manager', 'Guest'],
     default: 'Guest'
   },
-  isEmailVerified: {
+  isVerified: {
     type: Boolean,
-    default: true
+    default: false
   },
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  resetPasswordOTP: String,
-  resetPasswordOTPExpires: Date,
-  lastLogin: Date,
+  twoFactorEnabled: {
+    type: Boolean,
+    default: false
+  },
+  notificationPreferences: {
+    type: notificationPreferencesSchema,
+    default: () => ({})
+  },
+  status: {
+    type: String,
+    enum: ['active', 'deleted', 'suspended'],
+    default: 'active'
+  },
   createdAt: {
     type: Date,
     default: Date.now
   },
-  updatedAt: Date
+  updatedAt: {
+    type: Date
+  },
+  lastLogin: {
+    type: Date
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  resetPasswordOTP: String,
+  resetPasswordOTPExpires: Date
 });
+
+// Virtual field for password
+userSchema.virtual('password')
+  .set(function(password) {
+    if (!password) {
+      throw new Error('Password is required');
+    }
+    if (password.length < 8) {
+      throw new Error('Password must be at least 8 characters long');
+    }
+    this._password = password;
+  })
+  .get(function() {
+    return this._password;
+  });
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  
   try {
+    // Only hash the password if it's been modified (or is new)
+    if (!this._password && !this.isModified('passwordHash')) {
+      return next();
+    }
+
+    // Generate salt
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+
+    // If we have a new password, hash it
+    if (this._password) {
+      this.passwordHash = await bcrypt.hash(this._password, salt);
+      this._password = undefined;
+    }
+
     this.updatedAt = Date.now();
     next();
   } catch (error) {
     next(error);
   }
+});
+
+// Validate required password on new document
+userSchema.pre('validate', function(next) {
+  if (this.isNew && !this._password) {
+    this.invalidate('password', 'Password is required');
+  }
+  next();
 });
 
 // Method to compare password
@@ -94,8 +159,12 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     throw new Error('Password is required for comparison');
   }
 
+  if (!this.passwordHash) {
+    throw new Error('No password hash found for this user');
+  }
+
   try {
-    return await bcrypt.compare(candidatePassword, this.password);
+    return await bcrypt.compare(candidatePassword, this.passwordHash);
   } catch (error) {
     // Log the error for debugging and throw a more user-friendly error
     console.error('Password comparison error:', error);
@@ -105,8 +174,9 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 
 // Method to get public profile (exclude sensitive data)
 userSchema.methods.getPublicProfile = function() {
-  const userObject = this.toObject();
-  delete userObject.password;
+  const userObject = this.toObject({ virtuals: true });
+  delete userObject.passwordHash;
+  delete userObject._password;
   delete userObject.resetPasswordToken;
   delete userObject.resetPasswordExpires;
   return userObject;

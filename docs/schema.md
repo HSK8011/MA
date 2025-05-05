@@ -1,0 +1,317 @@
+// 1. USER MANAGEMENT DOMAIN
+// ========================
+
+// Users Collection - Core user information
+{
+  _id: ObjectId,
+  name: String,
+  email: String,          // unique, indexed
+  phoneNumber: String,
+  passwordHash: String,
+  timezone: String,
+  isVerified: Boolean,
+  twoFactorEnabled: Boolean,
+  notificationPreferences: {
+    email: Boolean,
+    appNotifications: Boolean,
+    notificationTypes: {
+      profileUpdates: Boolean,
+      newUserAdded: Boolean,
+      newSocialProfile: Boolean,
+      newPost: Boolean,
+      approvalRequests: Boolean,
+      requestApproved: Boolean,
+      requestRejected: Boolean
+    }
+  },
+  status: String,         // enum: ['active', 'deleted', 'suspended']
+  createdAt: Date,
+  updatedAt: Date,
+  lastLogin: Date
+}
+
+// UserRoles Collection - Role management
+{
+  _id: ObjectId,
+  userId: ObjectId,       // ref: Users
+  entityType: String,     // enum: ['team', 'account', 'organization']
+  entityId: ObjectId,     // ref: Teams/Accounts/Organizations
+  roles: [{
+    role: String,         // enum: ['admin', 'member', 'moderator', 'analyst', 'content_creator']
+    permissions: {
+      manageSocialAccounts: Boolean,
+      manageUsers: Boolean,
+      managePosts: Boolean,
+      approvePosts: Boolean,
+      manageEngagements: Boolean,
+      viewAnalytics: Boolean,
+      manageTeam: Boolean,
+      manageBilling: Boolean
+    },
+    assignedAt: Date,
+    assignedBy: ObjectId  // ref: Users
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Teams Collection - Team management
+{
+  _id: ObjectId,
+  name: String,
+  ownerId: ObjectId,      // ref: Users
+  settings: {
+    defaultTimezone: String,
+    approvalRequired: Boolean,
+    autoScheduling: Boolean
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// 2. SOCIAL MEDIA MANAGEMENT DOMAIN
+// ================================
+
+// SocialAccounts Collection - Connected social media accounts
+{
+  _id: ObjectId,
+  teamId: ObjectId,       // ref: Teams
+  platform: String,       // enum: ['twitter', 'facebook', 'instagram', 'linkedin', 'pinterest']
+  accountName: String,
+  accountId: String,      // Platform-specific ID
+  credentials: {
+    accessToken: String,  // encrypted
+    refreshToken: String, // encrypted
+    tokenExpiresAt: Date
+  },
+  status: String,         // enum: ['active', 'disconnected', 'needs_reauth']
+  metadata: {
+    profilePicture: String,
+    followerCount: Number,
+    following: Number,
+    totalPosts: Number,
+    // Platform-specific metadata
+  },
+  scheduleSlots: [{
+    dayOfWeek: Number,    // 0-6
+    timeOfDay: String,    // HH:mm format
+    isActive: Boolean
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// 3. CONTENT MANAGEMENT DOMAIN
+// ===========================
+
+// Posts Collection - Social media posts
+{
+  _id: ObjectId,
+  teamId: ObjectId,       // ref: Teams
+  creatorId: ObjectId,    // ref: Users
+  content: {
+    text: String,
+    mediaUrls: [String],
+    hashtags: [String],
+    mentions: [String],
+    links: [{
+      original: String,
+      shortened: String
+    }]
+  },
+  location: {
+    name: String,
+    coordinates: {
+      latitude: Number,
+      longitude: Number
+    }
+  },
+  scheduling: {
+    status: String,       // enum: ['draft', 'pending_approval', 'scheduled', 'published', 'failed']
+    publishAt: Date,
+    timeSlotId: ObjectId  // ref: ScheduleSlot
+  },
+  platforms: [{
+    socialAccountId: ObjectId,  // ref: SocialAccounts
+    platformPostId: String,     // ID from social platform
+    status: String,            // enum: ['pending', 'published', 'failed']
+    publishedAt: Date,
+    failureReason: String
+  }],
+  approval: {
+    required: Boolean,
+    approvedBy: ObjectId, // ref: Users
+    approvedAt: Date,
+    notes: String
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// HashtagSuites Collection - Predefined hashtag groups
+{
+  _id: ObjectId,
+  teamId: ObjectId,      // ref: Teams
+  name: String,
+  hashtags: [String],
+  category: String,
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// 4. ENGAGEMENT MANAGEMENT DOMAIN
+// ==============================
+
+// Engagements Collection - Social media interactions
+{
+  _id: ObjectId,
+  socialAccountId: ObjectId,  // ref: SocialAccounts
+  platformMessageId: String,
+  type: String,              // enum: ['comment', 'private_message', 'mention', 'review', 'like', 'share']
+  sender: {
+    platformId: String,
+    name: String,
+    profileUrl: String,
+    profilePicture: String
+  },
+  content: {
+    text: String,
+    mediaUrls: [String],
+    links: [String]
+  },
+  status: String,           // enum: ['pending', 'handled', 'archived', 'spam']
+  assignedTo: ObjectId,     // ref: Users
+  tags: [{
+    name: String,
+    color: String
+  }],
+  response: {
+    content: String,
+    respondedBy: ObjectId,  // ref: Users
+    respondedAt: Date
+  },
+  metadata: {
+    sentiment: String,      // enum: ['positive', 'neutral', 'negative']
+    language: String,
+    priority: Number        // 1-5
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// SavedReplies Collection - Template responses
+{
+  _id: ObjectId,
+  teamId: ObjectId,     // ref: Teams
+  name: String,
+  content: String,
+  category: String,
+  tags: [String],
+  createdBy: ObjectId,  // ref: Users
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// 5. ANALYTICS DOMAIN
+// ==================
+
+// Analytics Collection - Platform-specific analytics
+{
+  _id: ObjectId,
+  socialAccountId: ObjectId,  // ref: SocialAccounts
+  period: {
+    start: Date,
+    end: Date
+  },
+  metrics: {
+    followers: {
+      count: Number,
+      growth: Number
+    },
+    posts: {
+      count: Number,
+      engagement: Number
+    },
+    engagement: {
+      likes: Number,
+      comments: Number,
+      shares: Number,
+      clicks: Number
+    },
+    impressions: Number,
+    reach: Number
+  },
+  demographics: {
+    ageRanges: [{
+      range: String,
+      percentage: Number
+    }],
+    genders: [{
+      gender: String,
+      percentage: Number
+    }],
+    locations: [{
+      country: String,
+      count: Number
+    }]
+  },
+  topPosts: [{
+    postId: ObjectId,    // ref: Posts
+    engagement: Number
+  }],
+  createdAt: Date
+}
+
+// 6. SYSTEM MANAGEMENT DOMAIN
+// ==========================
+
+// SystemHealth Collection - System monitoring
+{
+  _id: ObjectId,
+  timestamp: Date,
+  status: {
+    isOperational: Boolean,
+    activeConnections: Number,
+    responseTime: Number,
+    cpuUsage: Number,
+    memoryUsage: Number
+  },
+  createdAt: Date
+}
+
+// AuditLogs Collection - System audit trail
+{
+  _id: ObjectId,
+  userId: ObjectId,     // ref: Users
+  action: String,       // enum: ['create', 'update', 'delete', 'login', 'logout']
+  entityType: String,   // What was affected
+  entityId: ObjectId,   // ID of affected entity
+  changes: {
+    before: Object,     // Previous state
+    after: Object      // New state
+  },
+  metadata: {
+    ipAddress: String,
+    userAgent: String,
+    location: String
+  },
+  createdAt: Date
+}
+
+// BackupMetadata Collection - Backup tracking
+{
+  _id: ObjectId,
+  type: String,        // enum: ['full', 'incremental']
+  status: String,      // enum: ['in_progress', 'completed', 'failed']
+  startTime: Date,
+  endTime: Date,
+  size: Number,        // in bytes
+  location: String,    // Backup storage location
+  metadata: {
+    collections: [{
+      name: String,
+      documentCount: Number
+    }]
+  },
+  createdAt: Date
+}
