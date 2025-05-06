@@ -1,0 +1,287 @@
+.connectPage {
+  padding: 24px;
+  background-color: #f8f9fa;
+  min-height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.connectButton {
+  background-color: #2f539a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.connectButton:hover {
+  background-color: #264785;
+  color: white;
+  text-decoration: none;
+}
+
+.contentContainer {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.searchBar {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #f8f9fa;
+}
+
+.searchBar input:focus {
+  border-color: #2f539a;
+}
+
+.accountsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.accountCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f0f7ff;
+  border-radius: 8px;
+  border: 1px solid #d7e7ff;
+}
+
+.accountInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.accountLogos {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.accountIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid white;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.platformIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: contain;
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background-color: white;
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.statusIcon {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+}
+
+.accountDetails h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.accountDetails p {
+  font-size: 14px;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.disconnectButton {
+  background-color: #fff0f0;
+  color: #ff4d4d;
+}
+
+.disconnectButton:hover {
+  background-color: #ffe0e0;
+}
+
+.reconnectButton {
+  background-color: #e6f7ff;
+  color: #2f539a;
+}
+
+.reconnectButton:hover {
+  background-color: #d6f0ff;
+}
+
+.queueButton {
+  background-color: #f0f5ff;
+  color: #2f539a;
+}
+
+.queueButton:hover {
+  background-color: #e0edff;
+}
+
+.removeButton {
+  background-color: #fff0f0;
+  color: #ff4d4d;
+}
+
+.removeButton:hover {
+  background-color: #ffe0e0;
+}
+
+@media (max-width: 1024px) {
+  .accountCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .connectPage {
+    padding: 16px;
+  }
+
+  .contentContainer {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .connectButton {
+    width: 100%;
+  }
+
+  .accountCard {
+    padding: 12px;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .connectPage {
+    padding: 12px;
+  }
+
+  .contentContainer {
+    padding: 12px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .accountInfo {
+    gap: 12px;
+  }
+
+  .accountIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .accountDetails h3 {
+    font-size: 14px;
+  }
+
+  .accountDetails p {
+    font-size: 12px;
+  }
+
+  .actionButton {
+    font-size: 12px;
+  }
+} 

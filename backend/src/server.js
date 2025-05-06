@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const teamRoutes = require('./routes/teamRoutes');
 
 // Initialize express app
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/teams', teamRoutes);
 
 // Basic route for testing
 app.get('/', (req, res) => {

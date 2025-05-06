@@ -1,0 +1,285 @@
+.connectNewPage {
+  padding: 24px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.mainHeading {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.content {
+  display: flex;
+  gap: 24px;
+}
+
+.mainSection {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.trialWarning {
+  background-color: #fff0f0;
+  color: #ff4d4d;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.trialWarning .upgradeNowButton {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 0 0 0 16px;
+  width: auto;
+}
+
+.trialWarning .upgradeNowButton:hover {
+  background-color: #ff3333;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.headerLeft {
+  max-width: 600px;
+}
+
+.blueTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2f539a;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #2f539a;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+.backArrow {
+  width: 16px;
+  height: 16px;
+}
+
+.platformGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.platformCard {
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.platformCard:hover {
+  border-color: #2f539a;
+  box-shadow: 0 4px 12px rgba(47, 83, 154, 0.1);
+  transform: translateY(-2px);
+}
+
+.platformIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.platformIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.platformInfo h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px;
+}
+
+.platformInfo p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.connectButton {
+  background-color: #2f539a;
+  color: white;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.connectButton:hover {
+  background-color: #264785;
+}
+
+.sidePanel {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.planInfo {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.giftIcon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+}
+
+.giftIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.planInfo h2 {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.planInfo h3 {
+  font-size: 20px;
+  color: #2f539a;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.planInfo p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.upgradeNowButton {
+  background-color: #2f539a;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.upgradeNowButton:hover {
+  background-color: #264785;
+}
+
+@media (max-width: 1200px) {
+  .platformGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sidePanel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainHeading {
+    font-size: 24px;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .headerLeft {
+    max-width: none;
+  }
+
+  .backButton {
+    margin-bottom: 16px;
+  }
+
+  .connectNewPage {
+    padding: 16px;
+  }
+
+  .mainSection,
+  .planInfo {
+    padding: 16px;
+  }
+
+  .platformGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .platformCard {
+    padding: 16px;
+  }
+} 

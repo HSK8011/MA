@@ -1,0 +1,38 @@
+.dashboardLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  margin-top: 60px; /* Height of navbar */
+}
+
+.mainContent {
+  flex: 1;
+  padding: 24px;
+  margin-left: 200px; /* Width of sidebar */
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .mainContent {
+    padding: 16px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 12px;
+  }
+} 

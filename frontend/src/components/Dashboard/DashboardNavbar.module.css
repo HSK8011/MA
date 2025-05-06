@@ -1,0 +1,308 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  margin-left: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.leftSection {
+  flex: 1;
+  max-width: 600px;
+  margin-right: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #2f539a;
+  font-weight: 600;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.subtext {
+  color: #666;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+.search {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.search:focus-within {
+  border-color: #2f539a;
+  background-color: white;
+}
+
+.searchIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+.searchIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px 12px 8px 0;
+  border: none;
+  font-size: 14px;
+  background: transparent;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.iconButton:hover {
+  background-color: #f8f9fa;
+}
+
+.notificationWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificationIcon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+}
+
+.userInfoContainer {
+  position: relative;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.userInfo:hover,
+.userInfo:focus {
+  background-color: #f8f9fa;
+}
+
+.userInfo:focus {
+  outline: 2px solid #2f539a;
+  outline-offset: -2px;
+}
+
+.userInfo:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.companyName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.email {
+  font-size: 12px;
+  color: #666;
+}
+
+.dropdownArrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #666;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.dropdownArrowUp {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.dropdownLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdownHeaderText {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownCompanyName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.dropdownEmail {
+  font-size: 12px;
+  color: #666;
+}
+
+.dropdownDivider {
+  border: none;
+  height: 1px;
+  background-color: #eee;
+  margin: 8px 0;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdownItem:hover,
+.dropdownItem:focus {
+  background-color: #f8f9fa;
+}
+
+.dropdownItem:focus {
+  outline: 2px solid #2f539a;
+  outline-offset: -2px;
+}
+
+.dropdownItem:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dropdownItem img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+  .leftSection {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    margin-left: 0;
+  }
+
+  .leftSection {
+    max-width: none;
+  }
+
+  .userDetails {
+    display: none;
+  }
+
+  .dropdown {
+    right: -16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .search {
+    display: none;
+  }
+
+  .dropdown {
+    width: 260px;
+    right: -12px;
+  }
+} 
